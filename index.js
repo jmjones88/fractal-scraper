@@ -11,7 +11,7 @@ const fs = require('fs');
   const textItems = await page.evaluate(() => {
     let textItems = [];
     // Get all the tree selectors and main root
-    let labels = document.querySelectorAll('.Navigation-group:nth-child(3) .Tree-collection');
+    let labels = document.querySelectorAll('#tree-components .Tree-collection');
     labels.forEach(collection => {
         // Get the label and figure out the tree depth
         let label = collection.querySelector('.Tree-collectionLabel');
@@ -42,7 +42,9 @@ const fs = require('fs');
   });
 
   // Write the file to the file system
-  stringify(textItems, function(err, output){
+  stringify(textItems, {
+    delimiter: ','
+  }, function(err, output){
     fs.writeFile("./output.csv", output, function (err) {
         if (err) throw err;
         console.log('Saved!');
